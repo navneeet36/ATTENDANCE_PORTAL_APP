@@ -46,6 +46,8 @@ public class AddAttendance extends BaseFragment {
     private ArrayList<BeanStudentSemInfo> studentlist;
     private ArrayList<Integer> stuPos = new ArrayList<>();
     FacultyPage mainActivity;
+    EditText branchid, semno;
+    String fid;
 
     public static AddAttendance newInstance(int sectionNumber) {
         AddAttendance fragment = new AddAttendance();
@@ -72,14 +74,14 @@ public class AddAttendance extends BaseFragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_add_attendance, container, false);
-        final EditText branchid = (EditText) v.findViewById(R.id.branchid);
-        final EditText semno = (EditText) v.findViewById(R.id.semno);
+        branchid = (EditText) v.findViewById(R.id.branchid);
+        semno = (EditText) v.findViewById(R.id.semno);
         subjects = (AppCompatSpinner) v.findViewById(R.id.subject);
         final Button getstudents = (Button) v.findViewById(R.id.getstudents);
         final Button submit = (Button) v.findViewById(R.id.submit);
         SharedPreferences editor = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        final String fid = editor.getString("faculty_id", "-1 ");
+        fid = editor.getString("faculty_id", "-1 ");
 
         HashMap<String, String> hashMap = new HashMap<String, String>();
         hashMap.put("faculty_id", fid);
@@ -118,28 +120,7 @@ public class AddAttendance extends BaseFragment {
                 b.setSubjectID(sub);
                 Gson gson = new Gson();
                 hashMap.put("data", gson.toJson(b));
-                VolleyHelper.postRequestVolley(getActivity(), AddAttendance.this, URL_API.InsertDates, hashMap, RequestCodes.InsertDates, false);
-
-                HashMap<String, String> hashMap1 = new HashMap<String, String>();
-                ArrayList<BeanAttendance> arra;
-                arra = new ArrayList<BeanAttendance>();
-                for (int i = 0; i < studentlist.size(); i++) {
-                    BeanStudentSemInfo info = studentlist.get(i);
-                    BeanAttendance b1 = new BeanAttendance();
-                    b1.setFacultyID(fid);
-                    b1.setRollNo(info.getRollNo());
-                    b1.setSubjectID(sub);
-                    b1.setBranchID(branchid.getText().toString());
-                    if (stuPos.contains(i)) {
-                        b1.setIsPresent("yes");
-                    } else
-                        b1.setIsPresent("no");
-                    b1.setSemNo(semno.getText().toString());
-                    arra.add(b1);
-                }
-                Gson gson1 = new Gson();
-                hashMap1.put("data", gson1.toJson(arra));
-                VolleyHelper.postRequestVolley(getActivity(), AddAttendance.this, URL_API.AddAttendance, hashMap1, RequestCodes.AddAttendance, false);
+                VolleyHelper.postRequestVolley(mainActivity, AddAttendance.this, URL_API.InsertDates, hashMap, RequestCodes.InsertDates, false);
 
             }
         });
@@ -190,7 +171,7 @@ public class AddAttendance extends BaseFragment {
             }
         }
 
-        if (requestCode == 22) {
+        else if (requestCode == 22) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
 
@@ -201,6 +182,51 @@ public class AddAttendance extends BaseFragment {
                     studentlist = new Gson().fromJson(jsonObject.get("student_list").toString(), new TypeToken<ArrayList<BeanStudentSemInfo>>() {
                     }.getType());
                     showDialog(studentlist);
+                } else
+                    Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } if (requestCode == 24) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+
+                int i = jsonObject.getInt("success");
+                Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else if (requestCode == 23) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+
+                int i = jsonObject.getInt("success");
+                if (i == 1) {
+
+                    HashMap<String, String> hashMap1 = new HashMap<String, String>();
+                    ArrayList<BeanAttendance> arra;
+                    arra = new ArrayList<BeanAttendance>();
+                    String sub = list.get(subjects.getSelectedItemPosition()).getSubjectID();
+                    for (int j = 0; j < studentlist.size(); j++) {
+                        BeanStudentSemInfo info = studentlist.get(j);
+                        BeanAttendance b1 = new BeanAttendance();
+                        b1.setFacultyID(fid);
+                        b1.setRollNo(info.getRollNo());
+                        b1.setSubjectID(sub);
+                        b1.setBranchID(branchid.getText().toString());
+                        if (stuPos.contains(j)) {
+                            b1.setIsPresent("yes");
+                        } else
+                            b1.setIsPresent("no");
+                        b1.setSemNo(semno.getText().toString());
+                        arra.add(b1);
+                    }
+                    Gson gson1 = new Gson();
+                    hashMap1.put("data", gson1.toJson(arra));
+                    VolleyHelper.postRequestVolley(mainActivity, AddAttendance.this, URL_API.AddAttendance, hashMap1, RequestCodes.AddAttendance, false);
+
                 } else
                     Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
