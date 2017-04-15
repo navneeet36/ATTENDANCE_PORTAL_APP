@@ -12,7 +12,6 @@ import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.RequestCodes;
 import com.example.hp.attendamce_portal.Utils.URL_API;
 import com.example.hp.attendamce_portal.Utils.VolleyHelper;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +30,7 @@ public class Forget extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forget);
+        setContentView(R.layout.activity_forgetpass);
         securityques = (TextView) findViewById(R.id.security_Question);
         securityans = (EditText) findViewById(R.id.security_Answer);
         pass = (EditText) findViewById(R.id.pass);
@@ -80,8 +79,8 @@ public class Forget extends BaseActivity {
                 JSONObject jsonObject = new JSONObject(response);
                 int i = jsonObject.getInt("success");
                 if (i == 1) {
-                    ques = new Gson().fromJson(jsonObject.getString("security_question"), String.class);
-                    ans = new Gson().fromJson(jsonObject.getString("security_answer"), String.class);
+                    ques = jsonObject.getString("security_question");
+                    ans = jsonObject.getString("security_answer");
                     securityques.setText(ques);
                     Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
