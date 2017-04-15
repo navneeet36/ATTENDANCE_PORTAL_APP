@@ -233,11 +233,8 @@ public class AddAttendance extends BaseFragment {
             LayoutInflater inflater = getLayoutInflater(getArguments());
             View row = inflater.inflate(R.layout.spinner_row, parent, false);
             TextView label = (TextView) row.findViewById(android.R.id.text1);
-            if (white)
-                label.setTextColor(Color.WHITE);
-            else label.setTextColor(Color.BLACK);
+            label.setTextColor(Color.BLACK);
             label.setText(getItem(position));
-
             return row;
         }
     }
