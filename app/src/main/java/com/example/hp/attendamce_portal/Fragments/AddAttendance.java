@@ -164,7 +164,7 @@ public class AddAttendance extends BaseFragment {
             }
         }
 
-        if (requestCode == 22) {
+        else if (requestCode == 22) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
 
@@ -181,7 +181,17 @@ public class AddAttendance extends BaseFragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        } else if (requestCode == 23) {
+        } if (requestCode == 24) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+
+                int i = jsonObject.getInt("success");
+                Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }else if (requestCode == 23) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
 
