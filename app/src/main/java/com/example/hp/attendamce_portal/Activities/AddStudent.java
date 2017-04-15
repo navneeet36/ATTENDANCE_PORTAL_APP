@@ -1,6 +1,9 @@
 package com.example.hp.attendamce_portal.Activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -53,6 +56,13 @@ public class AddStudent extends BaseActivity {
 
 
         if (id == R.id.action_settings) {
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+
+            editor.putString("username", null).commit();
+            editor.putString("password", null).commit();
+            editor.putString("loginInfo", null).commit();
+            startActivity(new Intent(this,LOGIN.class));
+            finish();
             return true;
         }
 

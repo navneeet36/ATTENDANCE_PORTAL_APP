@@ -1,6 +1,9 @@
 package com.example.hp.attendamce_portal.Activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -65,8 +68,14 @@ TabLayout tabLayout;
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+
+            editor.putString("username", null).commit();
+            editor.putString("password", null).commit();
+            editor.putString("loginInfo", null).commit();
+            startActivity(new Intent(this,LOGIN.class));
+            finish();
             return true;
         }
 

@@ -93,14 +93,15 @@ public class AddAttendance extends BaseFragment {
             public void onClick(View view) {
                 String sub = list.get(subjects.getSelectedItemPosition()).getSubjectID();
                 boolean allvalid = true;
-                if (branchid.getText().toString().matches("") ||semno.getText().toString().matches("")||sub.matches(""))
+                if (branchid.getText().toString().matches("") || semno.getText().toString().matches("") || sub.matches("")) {
                     allvalid = false;
-                Toast.makeText(getActivity(), "please fill all details and select subject", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "please fill all details and select subject", Toast.LENGTH_SHORT).show();
+                }
                 if (allvalid) {
                     HashMap<String, String> hashMap = new HashMap<String, String>();
                     hashMap.put("branch_id", branchid.getText().toString());
                     hashMap.put("sem_no", semno.getText().toString());
-                 //   String sub = list.get(subjects.getSelectedItemPosition()).getSubjectID();
+                    //   String sub = list.get(subjects.getSelectedItemPosition()).getSubjectID();
                     hashMap.put("subject_id", sub);
                     VolleyHelper.postRequestVolley(getActivity(), AddAttendance.this, URL_API.GetStudents, hashMap, RequestCodes.GetStudents, false);
                 }
@@ -169,9 +170,7 @@ public class AddAttendance extends BaseFragment {
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
-        }
-
-        else if (requestCode == 22) {
+        } else if (requestCode == 22) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
 
@@ -188,7 +187,8 @@ public class AddAttendance extends BaseFragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        } if (requestCode == 24) {
+        }
+        if (requestCode == 24) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
 
@@ -198,7 +198,7 @@ public class AddAttendance extends BaseFragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }else if (requestCode == 23) {
+        } else if (requestCode == 23) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
 
