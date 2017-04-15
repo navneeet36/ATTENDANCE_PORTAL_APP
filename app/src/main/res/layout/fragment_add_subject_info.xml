@@ -17,7 +17,7 @@
         android:layout_marginTop="20dp">
         <EditText
             android:id="@+id/subjectid"
-            android:textColor="@android:color/white"
+            
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -75,7 +75,7 @@
 
         <EditText
             android:id="@+id/semno"
-            android:textColor="@android:color/white"
+            
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -90,7 +90,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/update"
-        style="@android:style/Widget.Material.Button.Inset"
         android:layout_below="@+id/delete"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -100,7 +99,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/add"
-        style="@android:style/Widget.Material.Button.Inset"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/fbridlayout"
         android:layout_alignParentLeft="true"
@@ -111,7 +109,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/delete"
-        style="@android:style/Widget.Material.Button.Inset"
         android:layout_below="@+id/add"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

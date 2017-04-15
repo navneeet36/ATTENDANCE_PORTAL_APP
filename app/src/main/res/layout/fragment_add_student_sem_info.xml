@@ -16,7 +16,7 @@
 
         <EditText
             android:id="@+id/roll"
-            android:textColor="@android:color/white"
+            
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -35,7 +35,7 @@
 
     <EditText
         android:id="@+id/branchid"
-        android:textColor="@android:color/white"
+        
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -91,7 +91,6 @@
             android:layout_width="wrap_content"
             android:layout_height="37dp"
             android:text="GET SUBJECTS"
-            style="@android:style/Widget.Material.Button.Inset"
             android:layout_below="@+id/fmnamelayout"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
@@ -106,7 +105,6 @@
         android:layout_width="match_parent"
         android:layout_height="37dp"
         android:text="SUBMIT"
-        style="@android:style/Widget.Material.Button.Inset"
         android:layout_marginBottom="100dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />

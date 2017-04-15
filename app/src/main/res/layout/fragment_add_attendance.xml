@@ -26,7 +26,7 @@
                 android:ems="10"
                 android:hint="Branch ID"
                 android:inputType="text"
-                android:textColor="@android:color/white" />
+ />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -46,7 +46,7 @@
                 android:ems="10"
                 android:hint="Sem No"
                 android:inputType="text"
-                android:textColor="@android:color/white" />
+                 />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -67,7 +67,7 @@
                 android:ems="10"
                 android:hint="Faculty Id"
                 android:inputType="text"
-                android:textColor="@android:color/white" />
+                 />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatSpinner
@@ -81,7 +81,6 @@
 
         <Button
             android:id="@+id/getstudents"
-            style="@android:style/Widget.Material.Button.Inset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/subject"
@@ -90,7 +89,6 @@
 
         <Button
             android:id="@+id/submit"
-            style="@android:style/Widget.Material.Button.Inset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
