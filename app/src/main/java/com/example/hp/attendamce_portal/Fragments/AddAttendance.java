@@ -1,5 +1,6 @@
 package com.example.hp.attendamce_portal.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -17,7 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.VolleyError;
+import com.example.hp.attendamce_portal.Activities.FacultyPage;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.RequestCodes;
 import com.example.hp.attendamce_portal.Utils.URL_API;
@@ -42,13 +46,19 @@ public class AddAttendance extends BaseFragment {
     AppCompatSpinner subjects;
     private ArrayList<BeanStudentSemInfo> studentlist;
     private ArrayList<Integer> stuPos = new ArrayList<>();
-
+    FacultyPage mainActivity;
 
     public static AddAttendance newInstance(int sectionNumber) {
         AddAttendance fragment = new AddAttendance();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mainActivity = (FacultyPage) activity;
     }
 
     @Override
@@ -65,13 +75,12 @@ public class AddAttendance extends BaseFragment {
         View v = inflater.inflate(R.layout.fragment_add_attendance, container, false);
         final EditText branchid = (EditText) v.findViewById(R.id.branchid);
         final EditText semno = (EditText) v.findViewById(R.id.semno);
-        final EditText facultyid = (EditText) v.findViewById(R.id.facultyid);
         subjects = (AppCompatSpinner) v.findViewById(R.id.subject);
         final Button getstudents = (Button) v.findViewById(R.id.getstudents);
         final Button submit = (Button) v.findViewById(R.id.submit);
         SharedPreferences editor = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        String fid = editor.getString("faculty_id", "-1 ");
+        final String fid = editor.getString("faculty_id", "-1 ");
 
         HashMap<String, String> hashMap = new HashMap<String, String>();
         hashMap.put("faculty_id", fid);
@@ -97,7 +106,7 @@ public class AddAttendance extends BaseFragment {
                 HashMap<String, String> hashMap = new HashMap<String, String>();
 
                 BeanDates b = new BeanDates();
-                b.setFacultyID(facultyid.getText().toString());
+                b.setFacultyID(fid);
                 String sub = list.get(subjects.getSelectedItemPosition()).getSubjectID();
                 b.setSubjectID(sub);
                 Gson gson = new Gson();
@@ -110,7 +119,7 @@ public class AddAttendance extends BaseFragment {
                 for (int i = 0; i < studentlist.size(); i++) {
                     BeanStudentSemInfo info = studentlist.get(i);
                     BeanAttendance b1 = new BeanAttendance();
-                    b1.setFacultyID(facultyid.getText().toString());
+                    b1.setFacultyID(fid);
                     b1.setRollNo(info.getRollNo());
                     b1.setSubjectID(sub);
                     b1.setBranchID(branchid.getText().toString());
@@ -135,12 +144,24 @@ public class AddAttendance extends BaseFragment {
     @Override
     public void requestStarted(int requestCode) {
         super.requestStarted(requestCode);
+        //no need to show dialog for requestCode=RequestCodes.RecieveSubjects
+        if(mainActivity!=null && requestCode!=RequestCodes.RecieveSubjects)
+            mainActivity.showDialog();
+    }
+
+    @Override
+    public void requestEndedWithError(int requestCode, VolleyError error) {
+        super.requestEndedWithError(requestCode, error);
+        if(mainActivity!=null && requestCode!=RequestCodes.RecieveSubjects)
+            mainActivity.dismissDialog();
 
     }
 
     @Override
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
+        if(mainActivity!=null && requestCode!=RequestCodes.RecieveSubjects)
+            mainActivity.dismissDialog();
         if (requestCode == 21) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
@@ -187,7 +208,7 @@ public class AddAttendance extends BaseFragment {
         final ArrayList<String> students = new ArrayList<>();
         for (BeanStudentSemInfo info : studentlist)
             students.add(info.getRollNo());
-        new MaterialDialog.Builder(getContext())
+        new MaterialDialog.Builder(getActivity())
                 .title("Select students")
                 .items(students)
                 .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {

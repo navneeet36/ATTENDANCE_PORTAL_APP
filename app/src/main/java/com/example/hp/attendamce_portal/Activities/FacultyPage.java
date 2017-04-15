@@ -19,7 +19,7 @@ import com.example.hp.attendamce_portal.Fragments.ShowDayWiseAttendance;
 import com.example.hp.attendamce_portal.Fragments.ShowFacultyInfo;
 import com.example.hp.attendamce_portal.R;
 
-public class FacultyPage extends AppCompatActivity {
+public class FacultyPage extends BaseActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -50,6 +50,7 @@ public class FacultyPage extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(mViewPager);
 
 

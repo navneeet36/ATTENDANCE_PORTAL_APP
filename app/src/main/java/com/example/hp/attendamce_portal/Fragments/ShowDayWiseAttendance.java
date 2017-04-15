@@ -1,5 +1,6 @@
 package com.example.hp.attendamce_portal.Fragments;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
+import com.example.hp.attendamce_portal.Activities.FacultyPage;
 import com.example.hp.attendamce_portal.Adapers.AttendanceAdapter;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.DividerItemDecoration;
@@ -46,14 +48,21 @@ public class ShowDayWiseAttendance extends BaseFragment {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     AttendanceAdapter adapter;
-    public ShowDayWiseAttendance() {
-    }
+
+    FacultyPage mainActivity;
+
 
     public static ShowDayWiseAttendance newInstance(int sectionNumber) {
         ShowDayWiseAttendance fragment = new ShowDayWiseAttendance();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mainActivity = (FacultyPage) activity;
     }
 
     @Override
@@ -96,11 +105,16 @@ public class ShowDayWiseAttendance extends BaseFragment {
 
             }
         });
-        recyclerView = (RecyclerView)v. findViewById(R.id.recycler);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler);
+        linearLayoutManager = new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration mDividerItemDecoration =new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(mDividerItemDecoration);
 
         recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -131,12 +145,23 @@ public class ShowDayWiseAttendance extends BaseFragment {
     @Override
     public void requestStarted(int requestCode) {
         super.requestStarted(requestCode);
+        if (mainActivity != null)
+            mainActivity.showDialog();
+    }
+
+    @Override
+    public void requestEndedWithError(int requestCode, VolleyError error) {
+        super.requestEndedWithError(requestCode, error);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
 
     }
 
     @Override
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
         if (requestCode == 21) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
@@ -148,15 +173,13 @@ public class ShowDayWiseAttendance extends BaseFragment {
                     list = new Gson().fromJson(jsonObject.get("subject_list").toString(), new TypeToken<ArrayList<BeanSubjectInfo>>() {
                     }.getType());
                     showDialog(list);
-                    Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 } else
                     Snackbar.make(getView(), jsonObject.getString("message"), Snackbar.LENGTH_LONG).show();
 
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
-        }
-        else if (requestCode == 25) {
+        } else if (requestCode == 25) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
 
@@ -167,40 +190,37 @@ public class ShowDayWiseAttendance extends BaseFragment {
                     datelist = new Gson().fromJson(jsonObject.get("dates").toString(), new TypeToken<ArrayList<BeanDates>>() {
                     }.getType());
                     showDialogdates(datelist);
-                    Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                 } else
                     Snackbar.make(getView(), jsonObject.getString("message"), Snackbar.LENGTH_LONG).show();
 
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
-        }    else if (requestCode == 27) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
+        } else if (requestCode == 27) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
 
-                    int i = jsonObject.getInt("success");
-                    if (i == 1) {
+                int i = jsonObject.getInt("success");
+                if (i == 1) {
 
-                        attendancelist = new ArrayList<BeanAttendance>();
-                        attendancelist = new Gson().fromJson(jsonObject.get("attendance").toString(), new TypeToken<ArrayList<BeanAttendance>>() {
-                        }.getType());
-                        ArrayList<AttendanceList> arrayList = new ArrayList<>();
-                        for(BeanAttendance b:attendancelist)
-                        {
-                            arrayList.add(new AttendanceList(b.getRollNo(),b.getIsPresent()));
-                        }
+                    attendancelist = new ArrayList<BeanAttendance>();
+                    attendancelist = new Gson().fromJson(jsonObject.get("attendance").toString(), new TypeToken<ArrayList<BeanAttendance>>() {
+                    }.getType());
+                    ArrayList<AttendanceList> arrayList = new ArrayList<>();
+                    for (BeanAttendance b : attendancelist) {
+                        arrayList.add(new AttendanceList(b.getRollNo(), b.getIsPresent()));
+                    }
 
-                        adapter = new AttendanceAdapter(getContext(), arrayList);
-                        recyclerView.setAdapter(adapter);
+                    adapter = new AttendanceAdapter(getContext(), arrayList);
+                    recyclerView.setAdapter(adapter);
 
-                        Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                    } else
-                        Snackbar.make(getView(), jsonObject.getString("message"), Snackbar.LENGTH_LONG).show();
+                } else
+                    Snackbar.make(getView(), jsonObject.getString("message"), Snackbar.LENGTH_LONG).show();
 
-                } catch (JSONException e1) {
-                    e1.printStackTrace();
-                }
+            } catch (JSONException e1) {
+                e1.printStackTrace();
             }
+        }
 
 
     }
@@ -209,12 +229,13 @@ public class ShowDayWiseAttendance extends BaseFragment {
         final ArrayList<String> subjects = new ArrayList<>();
         for (BeanSubjectInfo info : list)
             subjects.add(info.getSubjectID());
-        new MaterialDialog.Builder(getContext())
+        new MaterialDialog.Builder(mainActivity)
                 .title("Select Subject ")
                 .items(subjects)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        if (which == -1) return true;
                         pos = which;
                         subid = list.get(pos).getSubjectID().toString();
                         return true;
@@ -230,12 +251,13 @@ public class ShowDayWiseAttendance extends BaseFragment {
         final ArrayList<String> subjects = new ArrayList<>();
         for (BeanDates info : datelist)
             subjects.add(info.getAttendanceDate());
-        new MaterialDialog.Builder(getContext())
+        new MaterialDialog.Builder(mainActivity)
                 .title("Select Dates ")
                 .items(subjects)
                 .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        if (which == -1) return true;
                         pos = which;
                         date = datelist.get(pos).getAttendanceDate().toString();
                         return true;
@@ -247,10 +269,5 @@ public class ShowDayWiseAttendance extends BaseFragment {
                 .show();
     }
 
-    @Override
-    public void requestEndedWithError(int requestCode, VolleyError error) {
-        super.requestEndedWithError(requestCode, error);
-
-    }
 
 }

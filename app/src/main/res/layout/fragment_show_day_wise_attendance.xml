@@ -1,41 +1,46 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray"
     tools:context="com.example.hp.attendamce_portal.Fragments.ShowDayWiseAttendance">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <Button
-        android:id="@+id/choosesubject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="choose subject :" />
-    <Button
-        android:id="@+id/choosedates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/choosesubject"
-        android:layout_marginTop="40dp"
-        android:text="choose dates :" />
-    <Button
-        android:id="@+id/showattendance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/choosedates"
-        android:layout_marginTop="40dp"
-        android:text="show attendance :" />
-    <android.support.v7.widget.RecyclerView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:layout_below="@+id/showattendance"
-        android:id="@+id/recycler"
-        android:layout_centerVertical="true" />
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/choosesubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="choose subject" />
+
+        <Button
+            android:id="@+id/choosedates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/choosesubject"
+            android:layout_marginTop="16dp"
+            android:text="choose dates" />
+
+        <Button
+            android:id="@+id/showattendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/choosedates"
+            android:layout_marginTop="16dp"
+            android:text="show attendance" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/showattendance"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/darker_gray" />
 
 
-
-</RelativeLayout>
-</ScrollView>
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
