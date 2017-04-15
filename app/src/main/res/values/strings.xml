@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">ATTENDAMCE_PORTAL</string>
+    <string name="btn_continue">Continue</string>
+    <string name="title_activity_sign_up">Sign_up</string>
+    <string name="network_error">please check your connection</string>
+    <string name="title_activity_student_page">StudentPage</string>
+    <string name="title_activity_faculty_page">FacultyPage</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="title_activity_add_student">AddStudent</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_add_faculty">AddFaculty</string>
+    <string name="title_activity_manage_student">ManageStudent</string>
+    <string name="title_activity_manage_faculty">ManageFaculty</string>
+    <string name="title_activity_manage_subject">ManageSubject</string>
+    <string name="title_activity_manage_branch">ManageBranch</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_forget_pass">ForgetPass</string>
+
+    <string name="title_activity_forget">Forget</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.hp.attendamce_portal">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".Main"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activities.LOGIN">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activities.AdminPanel" />
+        <activity
+            android:name=".Activities.SignUpActivity"
+            android:label="@string/title_activity_sign_in"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.AddStudent"
+            android:label="@string/title_activity_add_student"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.AddFaculty"
+            android:label="@string/title_activity_add_faculty"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.ManageStudent"
+            android:label="@string/title_activity_manage_student"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.ManageFaculty"
+            android:label="@string/title_activity_manage_faculty"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.ManageSubject"
+            android:label="@string/title_activity_manage_subject"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.ManageBranch"
+            android:label="@string/title_activity_manage_branch"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.StudentPage"
+            android:label="@string/title_activity_student_page"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.FacultyPage"
+            android:label="@string/title_activity_faculty_page"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.Forget"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_forget"
+            android:theme="@style/FullscreenTheme"></activity>
+    </application>
+
+</manifest>
