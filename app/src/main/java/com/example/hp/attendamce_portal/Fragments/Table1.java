@@ -1,5 +1,6 @@
 package com.example.hp.attendamce_portal.Fragments;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.VolleyError;
+import com.example.hp.attendamce_portal.Activities.StudentPage;
 import com.example.hp.attendamce_portal.Adapers.AttendanceAdapter;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.DividerItemDecoration;
@@ -41,6 +44,13 @@ public class Table1 extends BaseFragment {
     LinearLayoutManager linearLayoutManager;
     ArrayList<BeanAttendance> attendancelist;
     AttendanceAdapter adapter;
+    StudentPage mainActivity;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mainActivity = (StudentPage) activity;
+    }
     public static Table1 newInstance(int sectionNumber) {
         Table1 fragment = new Table1();
         Bundle args = new Bundle();
@@ -48,6 +58,7 @@ public class Table1 extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,22 +109,43 @@ public class Table1 extends BaseFragment {
         getattendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+              boolean allvalid=true;
+                        if(subid==null) {
+                            allvalid = false;
+                        }
+                Toast.makeText(getActivity(), "please select subject", Toast.LENGTH_SHORT).show();
+                if(allvalid) {
+                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                    hashMap.put("roll_no", rno);
+                    hashMap.put("subject_id", subid);
 
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("roll_no", rno);
-                hashMap.put("subject_id", subid);
-
-                VolleyHelper.postRequestVolley(getActivity(), Table1.this, URL_API.Recievetable1, hashMap, RequestCodes.Recievetable1, false);
-
+                    VolleyHelper.postRequestVolley(getActivity(), Table1.this, URL_API.Recievetable1, hashMap, RequestCodes.Recievetable1, false);
+                }
 
             }
         });
 
         return v;
     }
+    @Override
+    public void requestStarted(int requestCode) {
+        super.requestStarted(requestCode);
+        if (mainActivity != null)
+            mainActivity.showDialog();
+    }
+
+    @Override
+    public void requestEndedWithError(int requestCode, VolleyError error) {
+        super.requestEndedWithError(requestCode, error);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
+
+    }
 
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
         if (requestCode == 30) {
             try {
                 JSONObject jsonObject = new JSONObject(response);

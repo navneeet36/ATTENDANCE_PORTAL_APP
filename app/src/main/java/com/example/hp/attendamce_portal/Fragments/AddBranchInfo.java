@@ -1,5 +1,6 @@
 package com.example.hp.attendamce_portal.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.hp.attendamce_portal.Activities.ManageBranch;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.RequestCodes;
 import com.example.hp.attendamce_portal.Utils.URL_API;
@@ -23,13 +25,18 @@ import java.util.HashMap;
 
 
 public class AddBranchInfo extends BaseFragment {
-//static boolean d=true;
+ManageBranch mainActivity;
     public static AddBranchInfo newInstance(int sectionNumber) {
         AddBranchInfo fragment = new AddBranchInfo();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
         return fragment;
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mainActivity = (ManageBranch) activity;
     }
 
     @Override
@@ -107,7 +114,7 @@ public class AddBranchInfo extends BaseFragment {
 
                 if ( branchid.getText().toString().matches("")  ) {
                     allvalid = false;
-                    Toast.makeText(getContext(), "Fill All The Blanks", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please fill rollno", Toast.LENGTH_SHORT).show();
                 }
                 if (allvalid) {
         //            showDialog();
@@ -125,18 +132,23 @@ public class AddBranchInfo extends BaseFragment {
     @Override
     public void requestStarted(int requestCode) {
         super.requestStarted(requestCode);
-
+        if (mainActivity != null)
+            mainActivity.showDialog();
     }
 
     @Override
     public void requestEndedWithError(int requestCode, VolleyError error) {
         super.requestEndedWithError(requestCode, error);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
 
     }
-
     @Override
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
+
 
         try {
             JSONObject jsonObject = new JSONObject(response);

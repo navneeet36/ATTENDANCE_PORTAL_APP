@@ -1,5 +1,6 @@
 package com.example.hp.attendamce_portal.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.hp.attendamce_portal.Activities.AddStudent;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.FLog;
 import com.example.hp.attendamce_portal.Utils.RequestCodes;
@@ -26,12 +28,18 @@ import java.util.HashMap;
 
 public class AddStudentInfo extends BaseFragment {
 
-
+    AddStudent mainActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FLog.d("AddStudentInfo","Oncreatecalled");
+        FLog.d("AddStudentInfo", "Oncreatecalled");
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mainActivity = (AddStudent) activity;
     }
 
     @Override
@@ -39,7 +47,7 @@ public class AddStudentInfo extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        FLog.d("AddStudentInfo","Oncreateviewcalled");
+        FLog.d("AddStudentInfo", "Oncreateviewcalled");
         View v = inflater.inflate(R.layout.fragment_add_student_info, null);
         return v;
     }
@@ -48,7 +56,7 @@ public class AddStudentInfo extends BaseFragment {
     public void onViewCreated(View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
 
-        FLog.d("AddStudentInfo","onviewcreate");
+        FLog.d("AddStudentInfo", "onviewcreate");
         final EditText rollno = (EditText) v.findViewById(R.id.roll);
         final EditText name = (EditText) v.findViewById(R.id.name);
         final EditText fathername = (EditText) v.findViewById(R.id.fathername);
@@ -57,7 +65,7 @@ public class AddStudentInfo extends BaseFragment {
         final EditText mothername = (EditText) v.findViewById(R.id.mothername);
         final EditText branch = (EditText) v.findViewById(R.id.branch);
         Button submit = (Button) v.findViewById(R.id.btn_submit);
-        Button update =(Button)v.findViewById(R.id.btn_update);
+        Button update = (Button) v.findViewById(R.id.btn_update);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +119,7 @@ public class AddStudentInfo extends BaseFragment {
             }
         });
     }
+
     public static AddStudentInfo newInstance(int sectionNumber) {
         AddStudentInfo fragment = new AddStudentInfo();
         Bundle args = new Bundle();
@@ -118,22 +127,27 @@ public class AddStudentInfo extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void requestStarted(int requestCode) {
         super.requestStarted(requestCode);
-
+        if (mainActivity != null)
+            mainActivity.showDialog();
     }
 
     @Override
     public void requestEndedWithError(int requestCode, VolleyError error) {
         super.requestEndedWithError(requestCode, error);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
 
     }
 
     @Override
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
-
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
         try {
             JSONObject jsonObject = new JSONObject(response);
             int i = jsonObject.getInt("success");

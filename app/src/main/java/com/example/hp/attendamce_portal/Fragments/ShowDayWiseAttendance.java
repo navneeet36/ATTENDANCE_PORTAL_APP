@@ -98,11 +98,16 @@ public class ShowDayWiseAttendance extends BaseFragment {
         choosedates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("faculty_id", fid);
-                hashMap.put("subject_id", subid);
-                VolleyHelper.postRequestVolley(getActivity(), ShowDayWiseAttendance.this, URL_API.RecieveDates, hashMap, RequestCodes.RecieveDates, false);
-
+                boolean allvalid = true;
+                if (subid == null)
+                    allvalid = false;
+                Toast.makeText(getActivity(), "please select subject", Toast.LENGTH_SHORT).show();
+                if (allvalid) {
+                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                    hashMap.put("faculty_id", fid);
+                    hashMap.put("subject_id", subid);
+                    VolleyHelper.postRequestVolley(getActivity(), ShowDayWiseAttendance.this, URL_API.RecieveDates, hashMap, RequestCodes.RecieveDates, false);
+                }
             }
         });
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler);
@@ -131,11 +136,17 @@ public class ShowDayWiseAttendance extends BaseFragment {
         showattendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HashMap<String, String> hashMap1 = new HashMap<String, String>();
-                hashMap1.put("faculty_id", fid);
-                hashMap1.put("subject_id", subid);
-                hashMap1.put("attendance_date", date);
-                VolleyHelper.postRequestVolley(getActivity(), ShowDayWiseAttendance.this, URL_API.RecieveAttendance, hashMap1, RequestCodes.RecieveAttendance, false);
+                boolean allvalid = true;
+                if (date == null || subid == null)
+                    allvalid = false;
+                Toast.makeText(getActivity(), "please select subject and dates", Toast.LENGTH_SHORT).show();
+                if (allvalid) {
+                    HashMap<String, String> hashMap1 = new HashMap<String, String>();
+                    hashMap1.put("faculty_id", fid);
+                    hashMap1.put("subject_id", subid);
+                    hashMap1.put("attendance_date", date);
+                    VolleyHelper.postRequestVolley(getActivity(), ShowDayWiseAttendance.this, URL_API.RecieveAttendance, hashMap1, RequestCodes.RecieveAttendance, false);
+                }
             }
         });
         return v;

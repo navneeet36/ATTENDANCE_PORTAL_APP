@@ -1,5 +1,6 @@
 package com.example.hp.attendamce_portal.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
+import com.example.hp.attendamce_portal.Activities.AddStudent;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.RequestCodes;
 import com.example.hp.attendamce_portal.Utils.URL_API;
@@ -34,7 +36,7 @@ public class AddStudentSemInfo extends BaseFragment {
 
     View v;
     ArrayList<BeanSubjectInfo> si = new ArrayList<BeanSubjectInfo>();
-
+AddStudent mainActivity;
 
     public static AddStudentSemInfo newInstance(int sectionNumber) {
         AddStudentSemInfo fragment = new AddStudentSemInfo();
@@ -47,6 +49,11 @@ public class AddStudentSemInfo extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mainActivity = (AddStudent) activity;
     }
 
     @Override
@@ -68,7 +75,7 @@ public class AddStudentSemInfo extends BaseFragment {
 
                 String branch_id = branchid.getText().toString();
                 String sem_no = semno.getText().toString();
-                if (branch_id.equals(null) && sem_no.equals(null)) {
+                if (branch_id.matches("") && sem_no.matches("")) {
                     Toast.makeText(getContext(), "Fill All The Details", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -114,12 +121,23 @@ public class AddStudentSemInfo extends BaseFragment {
     @Override
     public void requestStarted(int requestCode) {
         super.requestStarted(requestCode);
+        if (mainActivity != null)
+            mainActivity.showDialog();
+    }
+
+    @Override
+    public void requestEndedWithError(int requestCode, VolleyError error) {
+        super.requestEndedWithError(requestCode, error);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
 
     }
 
     @Override
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
+        if(mainActivity!=null)
+            mainActivity.dismissDialog();
         try {
             JSONObject jsonObject = new JSONObject(response);
 
@@ -172,13 +190,5 @@ public class AddStudentSemInfo extends BaseFragment {
                 .show();
 
     }
-
-
-    @Override
-    public void requestEndedWithError(int requestCode, VolleyError error) {
-        super.requestEndedWithError(requestCode, error);
-
-    }
-
 
 }

@@ -1,6 +1,7 @@
 package com.example.hp.attendamce_portal.Activities;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,6 +20,7 @@ public class AddStudent extends BaseActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
         private ViewPager mViewPager;
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,9 @@ public class AddStudent extends BaseActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        tabLayout=(TabLayout)findViewById(R.id.tabs);
+        mViewPager.setOffscreenPageLimit(3);
+        tabLayout.setupWithViewPager(mViewPager);
 
     }
 
@@ -81,9 +85,9 @@ public class AddStudent extends BaseActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Add/Update_Stu_info";
                 case 1:
-                    return "SECTION 2";
+                    return "Add Stu_Sem_info";
 
             }
             return null;

@@ -1,5 +1,6 @@
 package com.example.hp.attendamce_portal.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.example.hp.attendamce_portal.Activities.ManageSubject;
 import com.example.hp.attendamce_portal.Adapers.SubListAdapter;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.DividerItemDecoration;
@@ -34,6 +37,7 @@ public class ShowSubject extends BaseFragment {
     LinearLayoutManager linearLayoutManager;
     ArrayList<BeanSubjectInfo> list = new ArrayList<>();
     SubListAdapter listAdapter;
+    ManageSubject mainActivity;
 
     public static ShowSubject newInstance(int sectionNumber) {
         ShowSubject fragment = new ShowSubject();
@@ -41,6 +45,11 @@ public class ShowSubject extends BaseFragment {
 
         fragment.setArguments(args);
         return fragment;
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mainActivity = (ManageSubject) activity;
     }
 
     @Override
@@ -84,6 +93,15 @@ public class ShowSubject extends BaseFragment {
     @Override
     public void requestStarted(int requestCode) {
         super.requestStarted(requestCode);
+        if (mainActivity != null)
+            mainActivity.showDialog();
+    }
+
+    @Override
+    public void requestEndedWithError(int requestCode, VolleyError error) {
+        super.requestEndedWithError(requestCode, error);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
 
     }
 
@@ -91,6 +109,8 @@ public class ShowSubject extends BaseFragment {
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
         try {
+            if (mainActivity != null)
+                mainActivity.dismissDialog();
             JSONObject jsonObject = new JSONObject(response);
 
             int i = jsonObject.getInt("success");

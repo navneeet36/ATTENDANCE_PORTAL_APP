@@ -1,5 +1,6 @@
 package com.example.hp.attendamce_portal.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
+import com.example.hp.attendamce_portal.Activities.AddFaculty;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.RequestCodes;
 import com.example.hp.attendamce_portal.Utils.URL_API;
@@ -41,12 +43,17 @@ import java.util.HashMap;
 public class AddFacultySemInfo extends BaseFragment {
     View v;
     ArrayList<BeanSubjectInfo> si = new ArrayList<BeanSubjectInfo>();
-
+AddFaculty mainActivity;
     public static AddFacultySemInfo newInstance(int sectionNumber) {
         AddFacultySemInfo fragment = new AddFacultySemInfo();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mainActivity = (AddFaculty) activity;
     }
 
     @Override
@@ -106,12 +113,22 @@ final Button btn=(Button)v.findViewById(R.id.choosesubjects);
     @Override
     public void requestStarted(int requestCode) {
         super.requestStarted(requestCode);
-
+        if (mainActivity != null)
+            mainActivity.showDialog();
     }
 
     @Override
+    public void requestEndedWithError(int requestCode, VolleyError error) {
+        super.requestEndedWithError(requestCode, error);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
+
+    }
+    @Override
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
+        if(mainActivity!=null)
+            mainActivity.dismissDialog();
         try {
             JSONObject jsonObject = new JSONObject(response);
 
@@ -166,12 +183,6 @@ final Button btn=(Button)v.findViewById(R.id.choosesubjects);
 
     }
 
-
-    @Override
-    public void requestEndedWithError(int requestCode, VolleyError error) {
-        super.requestEndedWithError(requestCode, error);
-
-    }
 
 
 }

@@ -40,7 +40,7 @@
 
         <EditText
             android:id="@+id/facultyname"
-            android:textColor="@android:color/white"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -60,7 +60,6 @@
 
         <EditText
             android:id="@+id/fathername"
-            android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -78,7 +77,7 @@
         android:layout_marginTop="10dp">
         <EditText
             android:id="@+id/mothername"
-            android:textColor="@android:color/white"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -98,7 +97,6 @@
 
         <EditText
             android:id="@+id/dob"
-            android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -122,7 +120,7 @@
 
         <EditText
             android:id="@+id/gender"
-            android:textColor="@android:color/white"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -164,7 +162,6 @@
         android:layout_marginTop="10dp">
         <EditText
             android:id="@+id/joiningdate"
-            android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

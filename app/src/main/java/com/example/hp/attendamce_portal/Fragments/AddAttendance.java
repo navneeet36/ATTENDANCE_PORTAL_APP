@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
 import com.example.hp.attendamce_portal.Activities.FacultyPage;
@@ -90,12 +89,20 @@ public class AddAttendance extends BaseFragment {
         getstudents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("branch_id", branchid.getText().toString());
-                hashMap.put("sem_no", semno.getText().toString());
                 String sub = list.get(subjects.getSelectedItemPosition()).getSubjectID();
-                hashMap.put("subject_id", sub);
-                VolleyHelper.postRequestVolley(getActivity(), AddAttendance.this, URL_API.GetStudents, hashMap, RequestCodes.GetStudents, false);
+                boolean allvalid = true;
+                if (branchid.getText().toString().matches("") ||semno.getText().toString().matches("")||sub.matches(""))
+                    allvalid = false;
+                Toast.makeText(getActivity(), "please fill all details and select subject", Toast.LENGTH_SHORT).show();
+                if (allvalid) {
+                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                    hashMap.put("branch_id", branchid.getText().toString());
+                    hashMap.put("sem_no", semno.getText().toString());
+                 //   String sub = list.get(subjects.getSelectedItemPosition()).getSubjectID();
+                    hashMap.put("subject_id", sub);
+                    VolleyHelper.postRequestVolley(getActivity(), AddAttendance.this, URL_API.GetStudents, hashMap, RequestCodes.GetStudents, false);
+                }
+
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
@@ -145,14 +152,14 @@ public class AddAttendance extends BaseFragment {
     public void requestStarted(int requestCode) {
         super.requestStarted(requestCode);
         //no need to show dialog for requestCode=RequestCodes.RecieveSubjects
-        if(mainActivity!=null && requestCode!=RequestCodes.RecieveSubjects)
+        if (mainActivity != null && requestCode != RequestCodes.RecieveSubjects)
             mainActivity.showDialog();
     }
 
     @Override
     public void requestEndedWithError(int requestCode, VolleyError error) {
         super.requestEndedWithError(requestCode, error);
-        if(mainActivity!=null && requestCode!=RequestCodes.RecieveSubjects)
+        if (mainActivity != null && requestCode != RequestCodes.RecieveSubjects)
             mainActivity.dismissDialog();
 
     }
@@ -160,7 +167,7 @@ public class AddAttendance extends BaseFragment {
     @Override
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
-        if(mainActivity!=null && requestCode!=RequestCodes.RecieveSubjects)
+        if (mainActivity != null && requestCode != RequestCodes.RecieveSubjects)
             mainActivity.dismissDialog();
         if (requestCode == 21) {
             try {

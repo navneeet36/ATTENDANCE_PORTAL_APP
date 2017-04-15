@@ -1,5 +1,6 @@
 package com.example.hp.attendamce_portal.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.example.hp.attendamce_portal.Activities.ManageStudent;
 import com.example.hp.attendamce_portal.Adapers.StuListAdapter;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.DividerItemDecoration;
@@ -33,12 +36,17 @@ public class ShowStudent extends BaseFragment {
     LinearLayoutManager linearLayoutManager;
     ArrayList<BeanStudentInfo> list = new ArrayList<>();
     StuListAdapter listAdapter;
-
+ManageStudent mainActivity;
     public static ShowStudent newInstance(int sectionNumber) {
         ShowStudent fragment = new ShowStudent();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mainActivity = (ManageStudent) activity;
     }
 
     @Override
@@ -81,12 +89,23 @@ public class ShowStudent extends BaseFragment {
     @Override
     public void requestStarted(int requestCode) {
         super.requestStarted(requestCode);
+        if (mainActivity != null)
+            mainActivity.showDialog();
+    }
+
+    @Override
+    public void requestEndedWithError(int requestCode, VolleyError error) {
+        super.requestEndedWithError(requestCode, error);
+        if (mainActivity != null)
+            mainActivity.dismissDialog();
 
     }
 
     @Override
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
+        if(mainActivity!=null)
+            mainActivity.dismissDialog();
         try {
             JSONObject jsonObject = new JSONObject(response);
 
