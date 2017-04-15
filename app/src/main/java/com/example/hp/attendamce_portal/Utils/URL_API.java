@@ -42,7 +42,8 @@ public class URL_API
         public static final String Recievetable2=baseUrl+"/Table2stupage";
         public static final String Forget=baseUrl+"/SetScurityQuestion";
         public static final String Update=baseUrl+"/updatepassword";
-
+        public static final String SearchStudent=baseUrl+"/DeleteStudent";
+        public static final String SearchFaculty=baseUrl+"/DeleteFaculty";
 
 
 }

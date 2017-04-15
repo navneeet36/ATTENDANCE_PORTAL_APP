@@ -39,6 +39,8 @@ public class RequestCodes {
     public static final int Recievetable2=32;
     public static final int Forget=33;
     public static final int Update=34;
+    public static final int SearchStudent=35;
+    public static final int SearchFaculty=36;
 
 
 
