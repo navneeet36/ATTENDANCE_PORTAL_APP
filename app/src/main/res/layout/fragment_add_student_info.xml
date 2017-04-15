@@ -1,179 +1,179 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/darker_gray"
     android:orientation="vertical"
     tools:context="com.example.hp.attendamce_portal.Fragments.AddStudentInfo">
 
     <!-- TODO: Update blank fragment layout -->
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/fRollLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:theme="@style/TextLabel"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp">
-    <EditText
-            android:id="@+id/roll"
-            android:textColor="@android:color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="Roll Number"
-            android:inputType="number" />
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/fNameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:theme="@style/TextLabel"
-        android:layout_below="@id/fRollLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/name"
-            android:textColor="@android:color/white"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fRollLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="Name"
-            android:inputType="text" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            app:theme="@style/TextLabel">
 
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/ffNamelayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:theme="@style/TextLabel"
-        android:layout_below="@id/fNameLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp">
+            <EditText
+                android:id="@+id/roll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Roll Number"
+                android:inputType="number"
+                 />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/fathername"
-            android:textColor="@android:color/white"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="Father's Name"
-            android:inputType="text" />
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/fmnamelayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:theme="@style/TextLabel"
-        android:layout_below="@id/ffNamelayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp">
-        <EditText
-            android:id="@+id/mothername"
-            android:textColor="@android:color/white"
+            android:layout_below="@id/fRollLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            app:theme="@style/TextLabel">
+
+            <EditText
+                android:id="@+id/name"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="text" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/ffNamelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="Mother's Name"
-            android:inputType="text" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_below="@id/fNameLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            app:theme="@style/TextLabel">
+
+            <EditText
+                android:id="@+id/fathername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Father's Name"
+                android:inputType="text"
+                 />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fmnamelayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ffNamelayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            app:theme="@style/TextLabel">
+
+            <EditText
+                android:id="@+id/mothername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Mother's Name"
+                android:inputType="text"
+                 />
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/fDob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:theme="@style/TextLabel"
             android:layout_below="@+id/fmnamelayout"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            app:theme="@style/TextLabel">
 
             <EditText
                 android:id="@+id/dob"
-                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Date of Birth(YYYY-MM-DD)"
-                android:inputType="date" />
+                android:inputType="date"
+                 />
         </android.support.design.widget.TextInputLayout>
 
 
-
-
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/fbranch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:theme="@style/TextLabel"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/fDob"
-        android:layout_marginTop="15dp">
-
-        <EditText
-            android:id="@+id/branch"
-            android:textColor="@android:color/white"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fbranch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="Branch"
-            android:inputType="textCapCharacters" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_below="@+id/fDob"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            app:theme="@style/TextLabel">
 
+            <EditText
+                android:id="@+id/branch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Branch"
+                android:inputType="textCapCharacters"
+                 />
+        </android.support.design.widget.TextInputLayout>
 
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/faddate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:theme="@style/TextLabel"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/fbranch"
-            android:layout_marginTop="15dp">
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            app:theme="@style/TextLabel">
 
             <EditText
                 android:id="@+id/addate"
-                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Admission Date(YYYY-MM-DD)"
-                android:inputType="date" />
+                android:inputType="date"
+                 />
 
         </android.support.design.widget.TextInputLayout>
 
 
-    <Button
-        android:id="@+id/btn_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="update Student"
-        style="@android:style/Widget.Material.Button.Inset"
-        android:layout_weight="1"
-        android:layout_marginTop="49dp"
-        android:layout_below="@+id/faddate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <Button
+            android:id="@+id/btn_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/faddate"
+            android:layout_marginTop="49dp"
+            android:layout_weight="1"
+            android:text="update Student" />
 
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Student"
-        style="@android:style/Widget.Material.Button.Inset"
-        android:layout_below="@+id/faddate"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/faddate"
+            android:text="Add Student" />
+    </RelativeLayout>
 </ScrollView>

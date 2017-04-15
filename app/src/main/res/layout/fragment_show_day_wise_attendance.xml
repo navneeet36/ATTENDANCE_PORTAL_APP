@@ -9,14 +9,12 @@
     android:layout_height="match_parent">
     <Button
         android:id="@+id/choosesubject"
-        style="@android:style/Widget.Material.Button.Inset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="choose subject :" />
     <Button
         android:id="@+id/choosedates"
-        style="@android:style/Widget.Material.Button.Inset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/choosesubject"
@@ -24,7 +22,6 @@
         android:text="choose dates :" />
     <Button
         android:id="@+id/showattendance"
-        style="@android:style/Widget.Material.Button.Inset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/choosedates"

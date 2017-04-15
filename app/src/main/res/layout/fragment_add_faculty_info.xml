@@ -21,7 +21,7 @@
 
         <EditText
             android:id="@+id/facultyid"
-            android:textColor="@android:color/white"
+            
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -144,7 +144,7 @@
         android:layout_marginTop="10dp">
         <EditText
             android:id="@+id/qualification"
-            android:textColor="@android:color/white"
+            
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -178,7 +178,6 @@
             android:layout_height="wrap_content"
             android:text="add faculty"
             android:layout_weight="1"
-            style="@android:style/Widget.Material.Button.Inset"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -188,8 +187,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="update faculty"
-
-            style="@android:style/Widget.Material.Button.Inset"
             android:layout_marginBottom="15dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"

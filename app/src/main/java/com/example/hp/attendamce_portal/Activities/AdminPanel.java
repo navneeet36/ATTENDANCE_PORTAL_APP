@@ -57,9 +57,9 @@ public class AdminPanel extends AppCompatActivity {
         });
         ArrayList<AdminItem> arrayList = new ArrayList<>();
       //  if (accesses.getOrderMgmt() == 1)
-            arrayList.add(new AdminItem("Add        Student", AddStudent.class, R.drawable.ic_action_new));
+            arrayList.add(new AdminItem("Add Student", AddStudent.class, R.drawable.ic_action_new));
         //if (accesses.getGuestMgmt() == 1)
-            arrayList.add(new AdminItem("Add          Faculty", AddFaculty.class, R.drawable.ic_action_new));
+            arrayList.add(new AdminItem("Add Faculty", AddFaculty.class, R.drawable.ic_action_new));
        // if (accesses.getTableMgmt() == 1)
             arrayList.add(new AdminItem("Manage Student", ManageStudent.class, R.drawable.ic_create_white_24dp));
        // if (accesses.getMenuMgmt() == 1)
