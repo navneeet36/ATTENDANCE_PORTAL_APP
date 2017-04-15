@@ -58,7 +58,7 @@ public class SignUpActivity extends BaseActivity {
         signup = (Button) findViewById(R.id.btn_signup);
         pass = (EditText) findViewById(R.id.pass);
         this.arraySpinner = new String[]{
-                " ------Please---Select---Security---Question-----", " Which is your favourite colour ?", "Who is your best friend ?",
+                "Please Select Security Question", " Which is your favourite colour ?", "Who is your best friend ?",
                 "Which is your favourite sport ?", "What is your maiden name ?"
         };
         MyCustomAdapter adapter = new MyCustomAdapter(this,R.layout.spinner_row, arraySpinner);
