@@ -88,7 +88,10 @@ public class FacialAttendance extends BaseActivity implements AttendanceAdapter.
 
                     beanAttendanceArrayList = new Gson().fromJson(jsonObject.get("list").toString(), new TypeToken<ArrayList<BeanAttendance>>() {
                     }.getType());
-
+                    if(beanAttendanceArrayList==null){
+                        Toast.makeText(this,"No students",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                     Collections.sort(beanAttendanceArrayList,beanAttendanceComparator);
                     attendanceAdapter=new AttendanceAdapter(this,beanAttendanceArrayList);
                     attendanceAdapter.setOnAttendanceClickListener(this);
@@ -115,6 +118,8 @@ public class FacialAttendance extends BaseActivity implements AttendanceAdapter.
                           attendanceAdapter=new AttendanceAdapter(this,beanAttendanceArrayList);
                           attendanceAdapter.setOnAttendanceClickListener(this);
                           recyclerView.setAdapter(attendanceAdapter);
+
+                          Toast.makeText(this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
                       }
                 } else

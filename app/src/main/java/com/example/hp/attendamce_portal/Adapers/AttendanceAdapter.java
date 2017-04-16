@@ -1,6 +1,7 @@
 package com.example.hp.attendamce_portal.Adapers;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Cu
         final BeanAttendance item = items.get(position);
         holder.rollno.setText(item.getRollNo());
         holder.ispresent.setText(item.getIsPresent().toLowerCase().equals("yes")?"Present":"Absent");
+        holder.ispresent.setTextColor(item.getIsPresent().toLowerCase().equals("yes")? Color.parseColor("#00695c"):Color.BLACK);
         holder.row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
