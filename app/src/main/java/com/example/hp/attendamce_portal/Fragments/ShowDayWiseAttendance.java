@@ -111,12 +111,8 @@ public class ShowDayWiseAttendance extends BaseFragment {
             }
         });
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler);
-        linearLayoutManager = new LinearLayoutManager(getActivity()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setNestedScrollingEnabled(false);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());

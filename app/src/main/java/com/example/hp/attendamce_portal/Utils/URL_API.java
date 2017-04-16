@@ -44,6 +44,8 @@ public class URL_API
         public static final String Update=baseUrl+"/updatepassword";
         public static final String SearchStudent=baseUrl+"/DeleteStudent";
         public static final String SearchFaculty=baseUrl+"/DeleteFaculty";
+        public static final String StartFaceAttendance=baseUrl+"/StartFaceAttendance";
+        public static final String AddFaceAttendance=baseUrl+"/InsertAttendanceFace";
 
 
 }

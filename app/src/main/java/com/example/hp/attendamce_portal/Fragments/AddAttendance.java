@@ -122,9 +122,26 @@ public class AddAttendance extends BaseFragment {
                 b.setFacultyID(fid);
                 String sub = list.get(subjects.getSelectedItemPosition()).getSubjectID();
                 b.setSubjectID(sub);
-                Gson gson = new Gson();
-                hashMap.put("data", gson.toJson(b));
-                VolleyHelper.postRequestVolley(mainActivity, AddAttendance.this, URL_API.InsertDates, hashMap, RequestCodes.InsertDates, false);
+                HashMap<String, String> hashMap1 = new HashMap<String, String>();
+                ArrayList<BeanAttendance> arra = new ArrayList<BeanAttendance>();
+                for (int j = 0; j < studentlist.size(); j++) {
+                    BeanStudentSemInfo info = studentlist.get(j);
+                    BeanAttendance b1 = new BeanAttendance();
+                    b1.setFacultyID(fid);
+                    b1.setRollNo(info.getRollNo());
+                    b1.setSubjectID(sub);
+                    b1.setBranchID(branchid.getText().toString());
+                    if (stuPos.contains(j)) {
+                        b1.setIsPresent("yes");
+                    } else
+                        b1.setIsPresent("no");
+                    b1.setSemNo(semno.getText().toString());
+                    arra.add(b1);
+                }
+                Gson gson1 = new Gson();
+                hashMap1.put("data", gson1.toJson(arra));
+                hashMap1.put("date",gson1.toJson(b));
+                VolleyHelper.postRequestVolley(mainActivity, AddAttendance.this, URL_API.AddAttendance, hashMap1, RequestCodes.AddAttendance, false);
 
             }
         });
@@ -140,24 +157,13 @@ public class AddAttendance extends BaseFragment {
                 }
                  branch_id=branchid.getText().toString();
                  sem_no=semno.getText().toString();
-                MaterialDialog.Builder builder=new MaterialDialog.Builder(mainActivity);
-                builder.title("Are you sure?");
-                builder.content("Previous attendance for this class will be cleared.");
-                builder.positiveText("OK");
-                builder.negativeText("cancel");
-                builder.onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        HashMap<String, String> hashMap = new HashMap<String, String>();
-                        hashMap.put("branch_id", branchid.getText().toString());
-                        hashMap.put("sem_no", semno.getText().toString());
-                        hashMap.put("subject_id", sub);
-                        VolleyHelper.postRequestVolley(getActivity(), AddAttendance.this, URL_API.GetStudents, hashMap, -22, false);
 
-
-                    }
-                });
-                builder.show();
+                Intent intent=new Intent(mainActivity, FacialAttendance.class);
+                intent.putExtra("branch_id",branch_id);
+                intent.putExtra("sub",sub);
+                intent.putExtra("fid",fid);
+                intent.putExtra("sem_no",sem_no);
+                startActivity(intent);
             }
         });
 
@@ -222,71 +228,13 @@ public class AddAttendance extends BaseFragment {
                 e.printStackTrace();
             }
         }
-        else if (requestCode == -22) {
-            try {
-                JSONObject jsonObject = new JSONObject(response);
 
-                int i = jsonObject.getInt("success");
-                if (i == 1) {
-
-                    studentlist = new ArrayList<BeanStudentSemInfo>();
-                    studentlist = new Gson().fromJson(jsonObject.get("student_list").toString(), new TypeToken<ArrayList<BeanStudentSemInfo>>() {
-                    }.getType());
-                    Intent intent=new Intent(mainActivity, FacialAttendance.class);
-                    intent.putExtra("branch_id",branch_id);
-                    intent.putExtra("sub",sub);
-                    intent.putExtra("fid",fid);
-                    intent.putExtra("sem_no",sem_no);
-                    intent.putParcelableArrayListExtra("stulist",studentlist);
-                    startActivity(intent);
-                } else
-                    Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
         else if (requestCode == 24) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
 
                 int i = jsonObject.getInt("success");
                 Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else if (requestCode == 23) {
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-
-                int i = jsonObject.getInt("success");
-                if (i == 1) {
-
-                    HashMap<String, String> hashMap1 = new HashMap<String, String>();
-                    ArrayList<BeanAttendance> arra;
-                    arra = new ArrayList<BeanAttendance>();
-                    String sub = list.get(subjects.getSelectedItemPosition()).getSubjectID();
-                    for (int j = 0; j < studentlist.size(); j++) {
-                        BeanStudentSemInfo info = studentlist.get(j);
-                        BeanAttendance b1 = new BeanAttendance();
-                        b1.setFacultyID(fid);
-                        b1.setRollNo(info.getRollNo());
-                        b1.setSubjectID(sub);
-                        b1.setBranchID(branchid.getText().toString());
-                        if (stuPos.contains(j)) {
-                            b1.setIsPresent("yes");
-                        } else
-                            b1.setIsPresent("no");
-                        b1.setSemNo(semno.getText().toString());
-                        arra.add(b1);
-                    }
-                    Gson gson1 = new Gson();
-                    hashMap1.put("data", gson1.toJson(arra));
-                    VolleyHelper.postRequestVolley(mainActivity, AddAttendance.this, URL_API.AddAttendance, hashMap1, RequestCodes.AddAttendance, false);
-
-                } else
-                    Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
             } catch (JSONException e) {
                 e.printStackTrace();

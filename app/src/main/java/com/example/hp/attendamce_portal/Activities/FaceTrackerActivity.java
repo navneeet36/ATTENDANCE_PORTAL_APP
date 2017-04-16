@@ -41,6 +41,7 @@ import com.example.hp.attendamce_portal.Utils.BitmapHandler;
 import com.example.hp.attendamce_portal.Utils.FaceGraphic;
 import com.example.hp.attendamce_portal.Utils.camera.CameraSourcePreview;
 import com.example.hp.attendamce_portal.Utils.camera.GraphicOverlay;
+import com.example.hp.attendamce_portal.pojo.BeanAttendance;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.vision.CameraSource;
@@ -75,13 +76,14 @@ public final class FaceTrackerActivity extends AppCompatActivity {
      * Initializes the UI and initiates the creation of a face detector.
      */
     boolean blink = true;
-
+    BeanAttendance beanAttendance;
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_camera);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         blink = sharedPreferences.getBoolean("blink", true);
+        beanAttendance=getIntent().getParcelableExtra("bean");
         mPreview = (CameraSourcePreview) findViewById(R.id.preview);
         mGraphicOverlay = (GraphicOverlay) findViewById(R.id.faceOverlay);
 
@@ -427,6 +429,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
                         BitmapHandler.setBitmap(bitmap);
                         Intent intent = new Intent();
+                        intent.putExtra("bean",beanAttendance);
                         setResult(5, intent);
                         finish();
 

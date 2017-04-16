@@ -45,7 +45,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Cu
     public void onBindViewHolder(final AttendanceAdapter.CustomHolder holder, final int position) {
         final BeanAttendance item = items.get(position);
         holder.rollno.setText(item.getRollNo());
-        holder.ispresent.setText(item.getIsPresent().equals("yes")?"Present":"Absent");
+        holder.ispresent.setText(item.getIsPresent().toLowerCase().equals("yes")?"Present":"Absent");
         holder.row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

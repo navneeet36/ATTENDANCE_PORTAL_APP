@@ -69,6 +69,8 @@
             android:label="@string/title_activity_forget"
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".Activities.FacialAttendance"></activity>
+
+        <activity android:name=".Activities.FaceTrackerActivity"></activity>
     </application>
 
 </manifest>
