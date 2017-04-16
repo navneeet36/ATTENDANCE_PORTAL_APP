@@ -43,6 +43,7 @@ public class RequestCodes {
     public static final int SearchFaculty = 36;
 
     public static final int AddFaceAttendance = 37;
+    public static final int RegisterFace = 38;
 
 
 }

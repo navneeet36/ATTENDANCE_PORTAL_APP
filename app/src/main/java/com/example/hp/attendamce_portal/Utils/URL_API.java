@@ -46,7 +46,7 @@ public class URL_API
         public static final String SearchFaculty=baseUrl+"/DeleteFaculty";
         public static final String StartFaceAttendance=baseUrl+"/StartFaceAttendance";
         public static final String AddFaceAttendance=baseUrl+"/InsertAttendanceFace";
-
+        public static final String RegisterFace=baseUrl+"/RegisterFace";
 
 }
 

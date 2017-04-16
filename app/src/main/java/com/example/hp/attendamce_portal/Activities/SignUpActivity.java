@@ -2,8 +2,10 @@ package com.example.hp.attendamce_portal.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
@@ -18,11 +20,15 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
 import com.example.hp.attendamce_portal.R;
+import com.example.hp.attendamce_portal.Utils.BitmapHandler;
 import com.example.hp.attendamce_portal.Utils.RequestCodes;
 import com.example.hp.attendamce_portal.Utils.URL_API;
 import com.example.hp.attendamce_portal.Utils.VolleyHelper;
+import com.example.hp.attendamce_portal.pojo.BeanAttendance;
 import com.example.hp.attendamce_portal.pojo.BeanLoginInfo;
 import com.google.gson.Gson;
 
@@ -61,9 +67,9 @@ public class SignUpActivity extends BaseActivity {
                 "Please Select Security Question", " Which is your favourite colour ?", "Who is your best friend ?",
                 "Which is your favourite sport ?", "What is your maiden name ?"
         };
-        MyCustomAdapter adapter = new MyCustomAdapter(this,R.layout.spinner_row, arraySpinner);
+        MyCustomAdapter adapter = new MyCustomAdapter(this, R.layout.spinner_row, arraySpinner);
         securityques.setAdapter(adapter);
-      //   securityques.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        //   securityques.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
 
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -74,14 +80,14 @@ public class SignUpActivity extends BaseActivity {
                     allvalid = false;
                     Toast.makeText(getApplicationContext(), "Fill All The Blanks", Toast.LENGTH_SHORT).show();
                 }
-                String faculty,rolln;
+                String faculty, rolln;
                 if (rb1.isChecked()) {
-                    faculty=null;
-                    rolln=rollno.getText().toString();
+                    faculty = null;
+                    rolln = rollno.getText().toString();
                     role = rb1.getText().toString();
                 } else {
-                    faculty=facultyid.getText().toString();
-                    rolln=null;
+                    faculty = facultyid.getText().toString();
+                    rolln = null;
                     role = rb2.getText().toString();
                 }
                 if (!isValidEmail(email.getText())) {
@@ -163,16 +169,61 @@ public class SignUpActivity extends BaseActivity {
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
         dismissDialog();
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            int i = jsonObject.getInt("success");
-            if (i == 1) {
-                Toast.makeText(this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, LOGIN.class));
-            } else
-                Snackbar.make(findViewById(R.id.main_frame), jsonObject.getString("message"), Snackbar.LENGTH_LONG).show();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (requestCode == RequestCodes.SIGN_IN) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                int i = jsonObject.getInt("success");
+                if (i == 1) {
+                    Toast.makeText(this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    if(jsonObject.get("role").toString().equals("student"))
+                    showFaceAddDialog();
+                    else finish();
+                } else
+                    Snackbar.make(findViewById(R.id.main_frame), jsonObject.getString("message"), Snackbar.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if (requestCode == RequestCodes.RegisterFace) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                int i = jsonObject.getInt("success");
+                if (i == 1) {
+                    Toast.makeText(this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    finish();
+                } else
+                    Snackbar.make(findViewById(R.id.main_frame), jsonObject.getString("message"), Snackbar.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    void showFaceAddDialog() {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
+        builder.title("Add face?").content("Do you want to add face?").positiveText("yes").negativeText("no").onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                Intent intent = new Intent(SignUpActivity.this, FaceTrackerActivity.class);
+                intent.putExtra("rollno", rollno.getText().toString());
+                startActivityForResult(intent, 1);
+            }
+        }).onNegative(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 5) {
+            Bitmap bitmap = BitmapHandler.getBitmap();
+            HashMap<String, String> hash = new HashMap<String, String>();
+            String roll = data.getStringExtra("rollno");
+            hash.put("roll_no", roll);
+            VolleyHelper.uploadImage(this, URL_API.RegisterFace, hash, RequestCodes.RegisterFace, bitmap);
         }
     }
 

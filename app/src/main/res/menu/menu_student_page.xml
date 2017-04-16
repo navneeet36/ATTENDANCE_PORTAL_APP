@@ -2,6 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.hp.attendamce_portal.Activities.StudentPage">
+    <item
+        android:id="@+id/add_face"
+        android:orderInCategory="100"
+        android:title="Register face"
+        android:visible="false"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_settings"

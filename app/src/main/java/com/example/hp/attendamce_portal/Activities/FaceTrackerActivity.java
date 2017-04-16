@@ -76,6 +76,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
      * Initializes the UI and initiates the creation of a face detector.
      */
     boolean blink = true;
+    String roll_no;
     BeanAttendance beanAttendance;
     @Override
     public void onCreate(Bundle icicle) {
@@ -84,6 +85,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         blink = sharedPreferences.getBoolean("blink", true);
         beanAttendance=getIntent().getParcelableExtra("bean");
+        roll_no=getIntent().getStringExtra("rollno");
         mPreview = (CameraSourcePreview) findViewById(R.id.preview);
         mGraphicOverlay = (GraphicOverlay) findViewById(R.id.faceOverlay);
 
@@ -430,6 +432,7 @@ public final class FaceTrackerActivity extends AppCompatActivity {
                         BitmapHandler.setBitmap(bitmap);
                         Intent intent = new Intent();
                         intent.putExtra("bean",beanAttendance);
+                        intent.putExtra("rollno",roll_no);
                         setResult(5, intent);
                         finish();
 
