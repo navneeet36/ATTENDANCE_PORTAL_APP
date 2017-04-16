@@ -71,6 +71,7 @@ public class ShowStudentInfo extends BaseFragment
         semno=(TextView)v.findViewById(R.id.semno);
         SwipeRefreshLayout mSwipe = (SwipeRefreshLayout)v.findViewById(R.id.swipe);
         recyclerView = (RecyclerView)v. findViewById(R.id.recycler);
+        recyclerView.setNestedScrollingEnabled(false);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);

@@ -174,6 +174,10 @@ AddStudent mainActivity;
                     public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                         sublist.clear();
                         sublist.addAll(Arrays.asList(which));
+                        si = new ArrayList<BeanSubjectInfo>();
+                        for (Integer pos : sublist) {
+                            si.add(list.get(pos));
+                        }
                         return true;
                     }
                 })
@@ -181,10 +185,7 @@ AddStudent mainActivity;
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        si = new ArrayList<BeanSubjectInfo>();
-                        for (Integer pos : sublist) {
-                            si.add(list.get(pos));
-                        }
+
                     }
                 })
                 .show();
