@@ -212,7 +212,7 @@ public class SignUpActivity extends BaseActivity {
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 finish();
             }
-        });
+        }).show();
     }
 
     @Override
