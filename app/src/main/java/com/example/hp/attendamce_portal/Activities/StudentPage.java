@@ -74,6 +74,7 @@ public class StudentPage extends BaseActivity {
         if (!logininfo.equals("-1")) {
             b = new Gson().fromJson(logininfo, BeanLoginInfo.class);
             showAddFace = b.getFace_registered() == 0;
+            supportInvalidateOptionsMenu();
         }
 
 
