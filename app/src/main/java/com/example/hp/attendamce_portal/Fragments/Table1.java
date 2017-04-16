@@ -17,15 +17,15 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
 import com.example.hp.attendamce_portal.Activities.StudentPage;
-import com.example.hp.attendamce_portal.Adapers.AttendanceAdapter;
+import com.example.hp.attendamce_portal.Adapers.Table1Adapter;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.DividerItemDecoration;
 import com.example.hp.attendamce_portal.Utils.RequestCodes;
 import com.example.hp.attendamce_portal.Utils.URL_API;
 import com.example.hp.attendamce_portal.Utils.VolleyHelper;
-import com.example.hp.attendamce_portal.pojo.AttendanceList;
 import com.example.hp.attendamce_portal.pojo.BeanAttendance;
 import com.example.hp.attendamce_portal.pojo.BeanSubjectInfo;
+import com.example.hp.attendamce_portal.pojo.Table1List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -43,7 +43,7 @@ public class Table1 extends BaseFragment {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     ArrayList<BeanAttendance> attendancelist;
-    AttendanceAdapter adapter;
+    Table1Adapter adapter;
     StudentPage mainActivity;
 
     @Override
@@ -175,8 +175,12 @@ public class Table1 extends BaseFragment {
                     attendancelist = new ArrayList<BeanAttendance>();
                     attendancelist = new Gson().fromJson(jsonObject.get("attendance").toString(), new TypeToken<ArrayList<BeanAttendance>>() {
                     }.getType());
-
-                    adapter = new AttendanceAdapter(getContext(), attendancelist);
+                    ArrayList<Table1List> arrayList = new ArrayList<>();
+                    for(BeanAttendance b1:attendancelist)
+                    {
+                        arrayList.add(new Table1List(b1.getAttendanceDate(),b1.getIsPresent()));
+                    }
+                    adapter = new Table1Adapter(getContext(), arrayList);
                     recyclerView.setAdapter(adapter);
 
                     Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
