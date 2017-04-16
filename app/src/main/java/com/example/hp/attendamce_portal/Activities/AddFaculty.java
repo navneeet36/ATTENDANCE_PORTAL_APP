@@ -97,9 +97,9 @@ public class AddFaculty extends BaseActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Add/Update Fac_Info";
+                    return "Add/Update FacInfo";
                 case 1:
-                    return "Add Fac_Sem_Info";
+                    return "Add FacSemInfo";
 
             }
             return null;

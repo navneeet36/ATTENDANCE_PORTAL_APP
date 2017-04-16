@@ -109,7 +109,7 @@ TabLayout tabLayout;
                 case 0:
                     return "View All";
                 case 1:
-                    return "Delete_Fac";
+                    return "Delete Fac";
 
             }
             return null;

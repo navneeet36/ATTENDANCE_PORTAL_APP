@@ -95,9 +95,9 @@ public class AddStudent extends BaseActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Add/Update_Stu_info";
+                    return "Add/Update Stuinfo";
                 case 1:
-                    return "Add Stu_Sem_info";
+                    return "Add StuSeminfo";
 
             }
             return null;

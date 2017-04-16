@@ -110,7 +110,7 @@ public class ManageStudent extends BaseActivity {
                 case 0:
                     return "View All";
                 case 1:
-                    return "Del_Stu";
+                    return "Delete Stu";
 
             }
             return null;
