@@ -44,11 +44,13 @@ public class LOGIN extends BaseActivity {
         forget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (username.equals(null) ) {
-                    Toast.makeText(getApplicationContext(), "Please Fill UserName", Toast.LENGTH_SHORT).show();
-                    return;
+
+                boolean isvalid = true;
+                if (username.getText().toString().matches("")) {
+                    isvalid = false;
+                    Toast.makeText(getApplicationContext(), "Please fill username", Toast.LENGTH_SHORT).show();
                 }
-                else {
+                if (isvalid) {
                     user_name = username.getText().toString();
                     Intent intent = new Intent(LOGIN.this, Forget.class);
                     intent.putExtra("username",user_name);

@@ -36,33 +36,38 @@ public class Forget extends BaseActivity {
         pass = (EditText) findViewById(R.id.pass);
         cpass = (EditText) findViewById(R.id.cpass);
         user_name = getIntent().getStringExtra("username");
-        Button update=(Button)findViewById(R.id.update);
+        Button update = (Button) findViewById(R.id.update);
 
         HashMap<String, String> hashMap = new HashMap<String, String>();
+
         hashMap.put("username", user_name);
         VolleyHelper.postRequestVolley(Forget.this, URL_API.Forget, hashMap, RequestCodes.Forget, false);
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(securityans.getText().toString().equalsIgnoreCase(ans))
-                {
-                    if(pass.getText().toString().equalsIgnoreCase(cpass.getText().toString()))
-                    {
-                        HashMap<String, String> hashMap = new HashMap<String, String>();
-                        hashMap.put("username", user_name);
-                        hashMap.put("password",pass.getText().toString());
-                        VolleyHelper.postRequestVolley(Forget.this, URL_API.Update, hashMap, RequestCodes.Update, false);
-                    }
-                    else
-                        Toast.makeText(getApplicationContext(), "password and confirm password did not match", Toast.LENGTH_SHORT).show();
+                boolean isvalid = true;
+                if (securityans.getText().toString().matches("")||pass.getText().toString().matches("")||cpass.getText().toString().matches("")) {
+                    isvalid = false;
+                    Toast.makeText(getApplicationContext(), "Please fill all details", Toast.LENGTH_SHORT).show();
                 }
-                else
-                    Toast.makeText(getApplicationContext(), "security answer did not matched", Toast.LENGTH_SHORT).show();
+                if (isvalid) {
+                    if (securityans.getText().toString().equalsIgnoreCase(ans)) {
+                        if (pass.getText().toString().equalsIgnoreCase(cpass.getText().toString())) {
+                            HashMap<String, String> hashMap = new HashMap<String, String>();
+                            hashMap.put("username", user_name);
+                            hashMap.put("password", pass.getText().toString());
+                            VolleyHelper.postRequestVolley(Forget.this, URL_API.Update, hashMap, RequestCodes.Update, false);
+                        } else
+                            Toast.makeText(getApplicationContext(), "password and confirm password did not match", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(getApplicationContext(), "security answer did not matched", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
-
     }
+
 
     @Override
     public void requestStarted(int requestCode) {
@@ -74,7 +79,7 @@ public class Forget extends BaseActivity {
     public void requestCompleted(int requestCode, String response) {
         super.requestCompleted(requestCode, response);
         dismissDialog();
-        if (requestCode ==33) {
+        if (requestCode == 33) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 int i = jsonObject.getInt("success");
@@ -89,8 +94,7 @@ public class Forget extends BaseActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
-       else if (requestCode ==34) {
+        } else if (requestCode == 34) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 int i = jsonObject.getInt("success");
