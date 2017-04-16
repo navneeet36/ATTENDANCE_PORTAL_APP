@@ -66,20 +66,31 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/subject"
             android:layout_marginTop="40dp"
-            android:text="GET Students" />
+            android:text="Mark Attendance" />
 
         <Button
             android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/getstudents"
-            android:layout_marginBottom="45dp"
+            android:layout_marginTop="45dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:text="add attendance" />
+            android:layout_marginRight="15dp"
+            android:text="Submit" />
+
+        <Button
+            android:id="@+id/facial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/submit"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="add attendance by face matching" />
     </RelativeLayout>
 </ScrollView>
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.pojo.AttendanceList;
+import com.example.hp.attendamce_portal.pojo.BeanAttendance;
 
 import java.util.ArrayList;
 
@@ -21,11 +22,10 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Cu
     Context mContext;
     LayoutInflater inflater;
     View view;
-    ArrayList<AttendanceList> items;
+    ArrayList<BeanAttendance> items;
+    OnAttendanceClickListener onAttendanceClickListener;
 
-
-
-    public AttendanceAdapter(Context activity, ArrayList<AttendanceList> arrayList) {
+    public AttendanceAdapter(Context activity, ArrayList<BeanAttendance> arrayList) {
         this.mContext = activity;
         inflater = LayoutInflater.from(mContext);
         this.items = arrayList;
@@ -43,12 +43,25 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Cu
 
     @Override
     public void onBindViewHolder(final AttendanceAdapter.CustomHolder holder, final int position) {
-        AttendanceList item = items.get(position);
-        holder.rollno.setText(item.getRollno());
-        holder.ispresent.setText(item.getIspresent());
+        final BeanAttendance item = items.get(position);
+        holder.rollno.setText(item.getRollNo());
+        holder.ispresent.setText(item.getIsPresent().equals("yes")?"Present":"Absent");
+        holder.row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onAttendanceClickListener!=null)
+                    onAttendanceClickListener.onClick(item);
+            }
+        });
 
     }
+    public interface OnAttendanceClickListener{
+        void onClick(BeanAttendance beanAttendance);
+    }
 
+    public void setOnAttendanceClickListener(OnAttendanceClickListener onAttendanceClickListener) {
+        this.onAttendanceClickListener = onAttendanceClickListener;
+    }
 
     @Override
     public int getItemCount() {
@@ -61,13 +74,13 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.Cu
 
         TextView rollno;
         TextView ispresent;
-
+        View row;
 
         public CustomHolder(View itemView) {
             super(itemView);
             rollno=(TextView)itemView.findViewById(R.id.rollno);
             ispresent = (TextView) itemView.findViewById(R.id.ispresent);
-
+            row=itemView;
 
 
         }

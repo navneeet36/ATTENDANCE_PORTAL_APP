@@ -175,13 +175,8 @@ public class Table1 extends BaseFragment {
                     attendancelist = new ArrayList<BeanAttendance>();
                     attendancelist = new Gson().fromJson(jsonObject.get("attendance").toString(), new TypeToken<ArrayList<BeanAttendance>>() {
                     }.getType());
-                    ArrayList<AttendanceList> arrayList = new ArrayList<>();
-                    for(BeanAttendance b:attendancelist)
-                    {
-                        arrayList.add(new AttendanceList(b.getAttendanceDate(),b.getIsPresent()));
-                    }
 
-                    adapter = new AttendanceAdapter(getContext(), arrayList);
+                    adapter = new AttendanceAdapter(getContext(), attendancelist);
                     recyclerView.setAdapter(adapter);
 
                     Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();

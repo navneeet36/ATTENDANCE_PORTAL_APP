@@ -2,6 +2,7 @@ package com.example.hp.attendamce_portal.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.VolleyError;
+import com.example.hp.attendamce_portal.Activities.FacialAttendance;
 import com.example.hp.attendamce_portal.Activities.FacultyPage;
 import com.example.hp.attendamce_portal.R;
 import com.example.hp.attendamce_portal.Utils.RequestCodes;
@@ -48,6 +50,7 @@ public class AddAttendance extends BaseFragment {
     FacultyPage mainActivity;
     EditText branchid, semno;
     String fid;
+    String  branch_id, sem_no, sub;
 
     public static AddAttendance newInstance(int sectionNumber) {
         AddAttendance fragment = new AddAttendance();
@@ -125,7 +128,38 @@ public class AddAttendance extends BaseFragment {
 
             }
         });
+        v.findViewById(R.id.facial).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 sub = list.get(subjects.getSelectedItemPosition()).getSubjectID();
+                boolean allvalid = true;
+                if (branchid.getText().toString().matches("") || semno.getText().toString().matches("") || sub.matches("")) {
+                    allvalid = false;
+                    Toast.makeText(getActivity(), "please fill all details and select subject", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                 branch_id=branchid.getText().toString();
+                 sem_no=semno.getText().toString();
+                MaterialDialog.Builder builder=new MaterialDialog.Builder(mainActivity);
+                builder.title("Are you sure?");
+                builder.content("Previous attendance for this class will be cleared.");
+                builder.positiveText("OK");
+                builder.negativeText("cancel");
+                builder.onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("branch_id", branchid.getText().toString());
+                        hashMap.put("sem_no", semno.getText().toString());
+                        hashMap.put("subject_id", sub);
+                        VolleyHelper.postRequestVolley(getActivity(), AddAttendance.this, URL_API.GetStudents, hashMap, -22, false);
 
+
+                    }
+                });
+                builder.show();
+            }
+        });
 
         return v;
     }
@@ -188,7 +222,31 @@ public class AddAttendance extends BaseFragment {
                 e.printStackTrace();
             }
         }
-        if (requestCode == 24) {
+        else if (requestCode == -22) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+
+                int i = jsonObject.getInt("success");
+                if (i == 1) {
+
+                    studentlist = new ArrayList<BeanStudentSemInfo>();
+                    studentlist = new Gson().fromJson(jsonObject.get("student_list").toString(), new TypeToken<ArrayList<BeanStudentSemInfo>>() {
+                    }.getType());
+                    Intent intent=new Intent(mainActivity, FacialAttendance.class);
+                    intent.putExtra("branch_id",branch_id);
+                    intent.putExtra("sub",sub);
+                    intent.putExtra("fid",fid);
+                    intent.putExtra("sem_no",sem_no);
+                    intent.putParcelableArrayListExtra("stulist",studentlist);
+                    startActivity(intent);
+                } else
+                    Toast.makeText(getContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (requestCode == 24) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
 
