@@ -7,6 +7,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rollno"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="8dp"
         android:textSize="16sp"
         android:fontFamily="sans-serif-medium"
         android:textColor="@android:color/black"
@@ -20,7 +24,10 @@
         android:id="@+id/name"
         android:textSize="14sp"
         android:textColor="@android:color/black"
-
+        android:paddingRight="8dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
         android:layout_below="@+id/rollno"
         />
 
@@ -30,6 +37,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/branchid"
         android:textSize="14sp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
         android:textColor="@android:color/black"
         android:layout_marginRight="12dp"
         android:layout_marginEnd="12dp"
