@@ -58,7 +58,6 @@ import java.io.IOException;
  */
 public final class FaceTrackerActivity extends AppCompatActivity {
     private static final String TAG = "FaceTracker";
-
     private CameraSource mCameraSource = null;
 
     private CameraSourcePreview mPreview;
